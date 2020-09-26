@@ -1,12 +1,11 @@
-import BaseModule from './structures/modules/BaseModule.js'
-import { delay } from '../../util/Util.js'
+import BaseModule from './structures/BaseModule.js'
 
 export default class Presence extends BaseModule {
     /**
-     * @param {MainClient} mainClient
+     * @param {Main} main
      */
-    constructor(mainClient) {
-        super(mainClient);
+    constructor(main) {
+        super(main);
 
         this.register(Presence, {
             name: 'presence',
@@ -73,7 +72,7 @@ export default class Presence extends BaseModule {
                 }
             });
 
-            await delay(this.switch_interval);
+            await this._m.util.delay(this.switch_interval);
         }
 
         this._startInterval();
