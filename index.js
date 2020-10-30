@@ -9,7 +9,6 @@ export default class Presence extends BaseModule {
 
         this.register(Presence, {
             name: 'presence',
-            scope: 'global',
             events: [
                 {
                     name: 'ready',
@@ -43,24 +42,6 @@ export default class Presence extends BaseModule {
         return outputStr;
     }
 
-    /**
-     * @private
-     */
-    _updatePresenceValues() {
-        this.presenceValues.serverCount = this.globalStorage.get('serverCount');
-    }
-
-    setup() {
-        Object.assign(this, this.config.presence_settings);
-
-        this.presenceValues = {
-            version: this._m.version,
-            serverCount: 1
-        };
-
-        return true;
-    }
-
     async _startInterval() {
         await this._updatePresenceValues();
 
@@ -76,5 +57,23 @@ export default class Presence extends BaseModule {
         }
 
         this._startInterval();
+    }
+
+    /**
+     * @private
+     */
+    _updatePresenceValues() {
+        this.presenceValues.serverCount = this.globalStorage.get('serverCount');
+    }
+
+    init() {
+        Object.assign(this, this.config.presence_settings);
+
+        this.presenceValues = {
+            version: this._m.version,
+            serverCount: 1
+        };
+
+        return true;
     }
 }
